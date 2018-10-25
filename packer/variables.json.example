@@ -1,0 +1,11 @@
+{
+        "gce_project_id": "id",
+        "gce_image_family": "family",
+        "gce_machine_type": "f1-micro",
+        "gce_image_description": "test image",
+        "gce_disk_size": "10",
+        "gce_disk_type": "pd-standard",
+        "gce_network": "default",
+        "gce_tags": "test" 
+}
+
