@@ -26,5 +26,5 @@ variable zone_app {
 
 variable count_instance {
   description = "Count instances"
-  default     = 2
+  default     = 1
 }

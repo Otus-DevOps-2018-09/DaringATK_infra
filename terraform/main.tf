@@ -27,7 +27,7 @@ resource "google_compute_instance" "app" {
   }
   
   metadata {
-    ssh-keys = "appuser:${file(var.public_key_path)}"
+    ssh-keys = "wrx:${file(var.public_key_path)}"
   }
 
   connection {
@@ -65,8 +65,8 @@ resource "google_compute_firewall" "firewall_puma" {
  target_tags = ["reddit-app"]
 }
 
-resource "google_compute_project_metadata" "ssh-keys" {
-  metadata {
-    ssh-keys = "wrx1:${file(var.public_key_path)}wrx2:${file(var.public_key_path)}wrx3:${file(var.public_key_path)}"
-  }
-}
+#resource "google_compute_project_metadata" "ssh-keys" {
+#  metadata {
+#    ssh-keys = "wrx1:${file(var.public_key_path)}wrx2:${file(var.public_key_path)}wrx3:${file(var.public_key_path)}"
+#  }
+#}
