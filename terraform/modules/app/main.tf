@@ -1,6 +1,6 @@
 resource "google_compute_instance" "app" {
   name         = "reddit-app"
-  machine_type = "${var.machine_type}"
+  machine_type = "g1-small"
   zone         = "${var.zone}"
   tags         = ["reddit-app"]
 
@@ -11,41 +11,15 @@ resource "google_compute_instance" "app" {
   }
 
   network_interface {
-    network = "${var.network}"
+    network = "default"
 
     access_config = {
       nat_ip = "${google_compute_address.app_ip.address}"
     }
   }
-}
 
-resource "null_resource" "provisioner-app" {
-  count = "${var.use_provisioner ? 1 : 0}"
-
-  connection {
-    host        = "${google_compute_instance.app.network_interface.0.access_config.0.assigned_nat_ip}"
-    type        = "ssh"
-    user        = "appuser"
-    agent       = false
-    private_key = "${file(var.private_key_path)}"
-  }
-
-  provisioner "file" {
-    content     = "${data.template_file.puma.rendered}"
-    destination = "/tmp/puma.service"
-  }
-
-  provisioner "remote-exec" {
-    script = "${path.module}/deploy.sh"
-  }
-}
-
-data "template_file" "puma" {
-  count    = "${var.use_provisioner ? 1 : 0}"
-  template = "${file("${path.module}/puma.service.tpl")}"
-
-  vars {
-    db_internal_ip = "${var.db_internal_ip}"
+  metadata {
+    ssh-keys = "gceuser:${file(var.public_key_path)}"
   }
 }
 
@@ -55,7 +29,7 @@ resource "google_compute_address" "app_ip" {
 
 resource "google_compute_firewall" "firewall_puma" {
   name    = "allow-puma-default"
-  network = "${var.network}"
+  network = "default"
 
   allow {
     protocol = "tcp"
