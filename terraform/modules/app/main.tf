@@ -19,7 +19,7 @@ resource "google_compute_instance" "app" {
   }
 
   metadata {
-    ssh-keys = "gceuser:${file(var.public_key_path)}"
+    ssh-keys = "appuser:${file(var.public_key_path)}"
   }
 }
 
