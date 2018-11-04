@@ -1,7 +1,4 @@
-project = "your_project_id"
+project = "project-id"
 public_key_path = "~/.ssh/appuser.pub"
 private_key_path = "~/.ssh/appuser"
-disk_image = "reddit-base"
-public_key = "ssh-rsa HERE_PUBLIC_KEY"
-static_ip = "35.206.158.95"
-
+db_internal_ip = "${module.db.db_internal_ip}"

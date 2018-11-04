@@ -2,14 +2,24 @@ provider "google" {
   version = "1.4.0"
   project = "${var.project}"
   region  = "${var.region}"
+  zone    = "${var.zone}"
 }
 
-module "storage-bucket" {
-  source  = "SweetOps/storage-bucket/google"
-  version = "0.1.1"
-  name    = ["storage-bucket-anton-iv-reddit"]
+resource "google_storage_bucket" "state_bucket" {
+  name = "terraform-state-storage-bucket"
+
+  versioning {
+    enabled = true
+  }
+
+  force_destroy = true
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
 
-output storage-bucket_url {
-  value = "${module.storage-bucket.url}"
+resource "google_storage_bucket_acl" "state_storage_bucket_acl" {
+  bucket         = "${google_storage_bucket.state_bucket.name}"
+  predefined_acl = "private"
 }

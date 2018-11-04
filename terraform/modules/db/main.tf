@@ -9,14 +9,31 @@ resource "google_compute_instance" "db" {
       image = "${var.db_disk_image}"
     }
   }
+  connection {
+    type        = "ssh"
+    user        = "appuser"
+    agent       = false
+    private_key = "${file(var.private_key_path)}"
+  }
 
+  provisioner "file" {
+    source      = "${path.module}/files/bind.sh"
+    destination = "/tmp/bind.sh"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "chmod +x /tmp/bind.sh",
+      "/tmp/bind.sh"
+    ]
+  }
   network_interface {
     network       = "default"
     access_config = {}
   }
 
   metadata {
-    ssh-keys = "gceuser:${file(var.public_key_path)}"
+    ssh-keys = "appuser:${file(var.public_key_path)}"
   }
 }
 
@@ -29,9 +46,6 @@ resource "google_compute_firewall" "firewall_mongo" {
     ports    = ["27017"]
   }
 
-  # правило применимо к инстансам с тегом ...
   target_tags = ["reddit-db"]
-
-  # порт будет доступен только для инстансов с тегом ...
   source_tags = ["reddit-app"]
 }
