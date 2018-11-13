@@ -1,14 +1,18 @@
-# DaringATK_infra
+## DaringATK_infra
 DaringATK Infra repository
 
-solution_1
+### solution_1
+```
 ssh -J wrx@35.210.57.9 wrx@10.132.0.3
+```
 
-solution_2
+### solution_2
+```
 nano ~/.ssh/config
+```
 
-add to config
-
+### add to config
+```
 Host bastion
    HostName 35.210.57.9
    User wrx
@@ -24,15 +28,17 @@ Host someinternalhost
 
 bastion_IP = 35.210.57.9
 someinternalhost_IP = 10.132.0.3
+```
 
-
-Homework 4 
-
+##Homework 4 
+```
 testapp_IP = 35.187.16.183
 testapp_port = 9292
+```
 
-command create vm and install app
+###command create vm and install app
 
+```
 gcloud compute instances create reddit-app\
   --boot-disk-size=10GB \
   --image-family ubuntu-1604-lts \
@@ -41,8 +47,9 @@ gcloud compute instances create reddit-app\
   --tags puma-server \
   --restart-on-failure \
   --metadata-from-file startup-script=./startup.sh
+```
 
-dd firewall  rule
+###add firewall  rule
 
 gcloud compute firewall-rules create default-puma-server\
   --allow=tcp:9292 \

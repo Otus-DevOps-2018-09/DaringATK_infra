@@ -1,0 +1,38 @@
+{
+    "variables": 
+       {
+        "gce_project_id": "third-expanse-218921",
+        "gce_image_family": "reddit-db-base",
+        "gce_machine_type": "f1-micro",
+        "gce_image_description": "test image",
+        "gce_disk_size": "10",
+        "gce_disk_type": "pd-standard",
+        "gce_network": "default",
+        "gce_tags": "test"
+       },	
+    "builders": [
+        {
+            "type": "googlecompute",
+            "project_id": "{{user `gce_project_id`}}",
+            "image_name": "reddit-base-{{timestamp}}",
+            "image_family": "{{user `gce_image_family`}}",
+            "source_image_family": "ubuntu-1604-lts",
+            "zone": "europe-west1-b",
+            "ssh_username": "appuser",
+            "machine_type": "{{user `gce_machine_type`}}",
+            "image_description": "{{user `gce_image_description`}}",
+            "disk_size": "{{user `gce_disk_size`}}",
+            "disk_type": "{{user `gce_disk_type`}}",
+            "network": "{{user `gce_network`}}",
+            "tags": "{{user `gce_tags`}}"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "scripts/install_mongodb.sh",
+            "execute_command": "sudo {{.Path}}"
+        }	
+    ]
+}
+
