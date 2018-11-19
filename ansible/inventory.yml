@@ -1,0 +1,10 @@
+app:
+  hosts:
+      appserver: 
+        ansiblr_host: 
+          35.205.197.207
+db:
+  hosts:
+      dbserver: 
+        hosts:
+          35.241.232.145  
