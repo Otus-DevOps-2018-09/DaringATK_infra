@@ -2,3 +2,7 @@ variables.json
 *.retry
 jdauphant.nginx
 vault.key
+*.bcp
+*.bkp
+*.tfstate
+*.tfstate.backup
