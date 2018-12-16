@@ -1,18 +1,18 @@
 ## DaringATK_infra
 DaringATK Infra repository
 
-###solution_1
+### solution_1
 ```
 ssh -J wrx@35.210.57.9 wrx@10.132.0.3
 ```
 
-###solution_2
+### solution_2
 ```
 nano ~/.ssh/config
 ```
 
-add to config
-
+### add to config
+```
 Host bastion
    HostName 35.210.57.9
    User wrx
@@ -28,7 +28,7 @@ Host someinternalhost
 
 bastion_IP = 35.210.57.9
 someinternalhost_IP = 10.132.0.3
-
+```
 
 ##Homework 4 
 ```
